@@ -20,15 +20,18 @@ int main(){
     int m;
     double t_start, t_end;
     t_start = omp_get_wtime();
-    # pragma omp parallel for
+    # pragma omp parallel for private(st)
         for (int n=2; n<=500; n++){
+            st = 'T'
             for (int m = 2; m<n; m++){
                 if ( fermat_prime(n,m) != 1){
                     cnt --;
-                    printf("%d\t",n);
+                    st = 'F';
                     break;
                 }
             }
+            if (st == 'T')
+                printf("%d\t",n);
     }
     t_end = omp_get_wtime();
 
